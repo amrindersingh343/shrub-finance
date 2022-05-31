@@ -95,6 +95,18 @@ function DesktopMenu() {
           Leaderboard
         </Link>
         <Link
+          as={ReachLink}
+          to="/seedsStats"
+          variant="ghost"
+          cursor="pointer"
+          px={2}
+          py={{ base: "3", md: "1", lg: "1" }}
+          rounded={"lg"}
+          _hover={{ textDecoration: "none", bgGradient: gradient }}
+        >
+          SeedsStats
+        </Link>
+        <Link
           href="https://opensea.io/collection/shrub-paper-gardens"
           isExternal
           variant="ghost"

@@ -13,6 +13,7 @@ import MyPaperGardenView from "./pages/MyPaperGardenView";
 import ChaptersView from "./pages/ChaptersView";
 import IntroView from "./pages/IntroView";
 import ReactGA from "react-ga";
+import SeedsStatsView from "./pages/SeedsStatsView";
 const trackingID = process.env.REACT_APP_TRACKING_ID;
 if (trackingID) {
   ReactGA.initialize(trackingID, {
@@ -57,6 +58,7 @@ function App() {
               <NFTView path="/nft/paper-seed/:tokenId" />
               <AdoptionCenterView path="/adoption" />
               <MyPaperGardenView path="/my-garden" />
+              <SeedsStatsView path="/seedsStats" />
             </Router>
           </Store>
         </ApolloProvider>
