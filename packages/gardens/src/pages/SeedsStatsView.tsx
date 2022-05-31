@@ -12,6 +12,7 @@ import {
   Table,
   Spinner,
 } from "@chakra-ui/react";
+
 import { RouteComponentProps } from "@reach/router";
 import React, { useEffect } from "react";
 
@@ -26,30 +27,17 @@ let circulationPassionSeed: number;
 
 function SeedsStatsView(props: RouteComponentProps) {
   const seedsType = ["Passion", "Hope", "Power"];
-  const power = "Power";
-  const passion = "Passion";
-  const hope = "Hope";
   const id = "0xbcfe78a91b6968322ed1b08fbe3a081353487910";
-  const treasurySeeds: number[] = [];
-  let totalSeedsTreasury;
-  const transState = [];
 
-  const getSeeds = gql`
-    query GetData($seedtype: string) {
-      seeds(where: { type: $seedtype }) {
-        name
-      }
-    }
-  `;
   const totalSeedsInTreasury = gql`
-    query MyQuery {
+    query SeedsInTreasury {
       users(where: { id: "0xbcfe78a91b6968322ed1b08fbe3a081353487910" }) {
         seedCount
       }
     }
   `;
   const seedsTypeTreasury = gql`
-    query MyQuery($id: String, $value: String) {
+    query SeedsTypeTreasury($id: String, $value: String) {
       users(where: { id: $id }) {
         seeds(where: { type: $value }, first: 1000) {
           type
@@ -58,19 +46,8 @@ function SeedsStatsView(props: RouteComponentProps) {
     }
   `;
 
-  const seeds = gql`
-    query MyQuery {
-      users(where: { id: "0xbcfe78a91b6968322ed1b08fbe3a081353487910" }) {
-        seeds {
-          type
-          name
-        }
-      }
-    }
-  `;
-
   const seedsClaim = gql`
-    query MyQuery {
+    query seedsClaim {
       typeStats {
         id
         claimed
@@ -79,7 +56,7 @@ function SeedsStatsView(props: RouteComponentProps) {
   `;
 
   const bg = useColorModeValue("sprout", "teal");
-  const data1 = useQuery(totalSeedsInTreasury, { variables: { type: hope } });
+  const data1 = useQuery(totalSeedsInTreasury);
   const claimedSeeds = useQuery(seedsClaim);
   const totalSeedsShrubTeasury = data1?.data?.users[0]?.seedCount;
   for (let i = 0; i < seedsType.length; i++) {
@@ -110,7 +87,6 @@ function SeedsStatsView(props: RouteComponentProps) {
 
   if (claimedSeeds?.data?.typeStats?.length) {
     for (let i = 0; i < claimedSeeds.data.typeStats.length; i++) {
-      transState.push(claimedSeeds.data.typeStats[i]);
       switch (claimedSeeds.data.typeStats[i].id) {
         case "Passion":
           circulationPassionSeed =
